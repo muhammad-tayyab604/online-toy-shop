@@ -1,0 +1,141 @@
+@extends('layouts.adminSideBar')
+@section('content')
+@section('title', 'Add Toys')
+
+<body class="bg-gray-100 font-family-karla flex">
+
+
+    <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
+
+        <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
+            <main class="w-full flex-grow p-6">
+                <div id="createProductModal"
+                    class="flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] md:h-full">
+                    <div class="relative p-4 w-full  h-full md:h-auto">
+                        <!-- Modal content -->
+                        <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                            <!-- Modal header -->
+                            <div
+                                class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Add Toy</h3>
+                                <a href="{{ route('admin.manageToy') }}">
+                                    <button type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        data-modal-toggle="createProductModal">
+                                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </a>
+                            </div>
+                            <form action="{{ route('toy.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                                    <div>
+                                        <label for="name"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Toy
+                                            Name</label>
+                                        <input type="text" name="toyName" id="name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            placeholder="Type product name" required="">
+                                    </div>
+                                    <div><label for="category"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Availability</label><select
+                                            id="category" name="availability"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                            <option selected disabled>Select Availability</option>
+                                            <option value="available">Available</option>
+                                            <option value="notAvailable">Not Available</option>
+                                            <option value="commingSoon">Comming Soon</option>
+                                        </select></div>
+                                    <div>
+                                        <label for="quantity"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity
+                                            Available</label>
+                                        <input type="number" name="quantity" id="quantity"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            placeholder="e.g. 1000" required="">
+                                    </div>
+                                    <div>
+                                        <label for="price"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+                                        <input type="number" name="price" id="price"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            placeholder="$2999" required="">
+                                    </div>
+
+                                    <div class="sm:col-span-2"><label for="description"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                                        <textarea id="description" rows="4" name="description"
+                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            placeholder="Write product description here"></textarea>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product
+                                        Images</span>
+                                    <div class="flex justify-center items-center w-full">
+                                        <label for="dropzone-file"
+                                            class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                            <div class="flex flex-col justify-center items-center pt-5 pb-6">
+                                                <svg aria-hidden="true" class="mb-3 w-10 h-10 text-gray-400"
+                                                    fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                                </svg>
+                                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                                    <span class="font-semibold">Click to upload</span>
+                                                    or drag and drop
+                                                </p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or
+                                                    GIF (MAX. 800x400px)</p>
+                                            </div>
+                                            <input id="dropzone-file" type="file" accept="image/*" multiple
+                                                onchange="loadFiles(event)" name="toy_image[]" class="hidden">
+                                        </label>
+                                    </div>
+                                    <div id="image-preview" class="flex justify-center mt-4"></div>
+                                </div>
+                                <div class="items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+                                    <button type="submit"
+                                        class="w-full sm:w-auto justify-center text-gray-100 inline-flex bg-[#2563eb] hover:bg-[#1e40af] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Add
+                                        Toy</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {{-- </div> --}}
+
+            </main>
+        </div>
+
+    </div>
+
+    <script>
+        function loadFiles(event) {
+            const previewContainer = document.getElementById('image-preview');
+            previewContainer.innerHTML = ''; // Clear previous previews
+
+            const files = event.target.files;
+
+            for (const file of files) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'w-32 h-32 object-cover rounded-md m-2';
+                    previewContainer.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+@endsection
